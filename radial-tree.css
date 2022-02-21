@@ -117,7 +117,7 @@
   font-weight: 500;
 }
 .node text:hover {
-  font-size: 1.2em;
+  font-size: 30px !important;
   transition: font-size 0.1s;
   font-weight: bold;
 }

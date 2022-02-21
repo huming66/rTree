@@ -141,7 +141,7 @@ d3.csv(_csv, function(error, treeData) {
     // Compute the new tree layout.
     var nodes = tree.nodes(root);
     var nNode = nodes.length                            //hm
-    var ftSize = Math.round(27/Math.log10(nNode)) +'px' //hm
+    var ftSize = Math.min(27,Math.round(27/Math.log10(nNode))) +'px' //hm
     var links = tree.links(nodes);
     // Update the view
     svgGroup.transition().duration(duration)
