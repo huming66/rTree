@@ -1,6 +1,27 @@
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    vars[key] = value;
+  });
+  return vars;
+}
+
+var _csv = getUrlVars('csv')['csv']
+if (_csv) {
+  _csv = _csv + '.csv'
+} else {
+  _csv = 'zg.csv'
+}
+var _xz = getUrlVars('xz')['xz']
+if (_xz) {
+  _xz = decodeURIComponent(_xz)
+} else {
+  _xz = '宗贵'
+}
+
 // Get JSON data
 // d3.json('data-flare.json', function(error, treeData) {
-d3.csv('zg.csv', function(error, treeData) {
+d3.csv(_csv, function(error, treeData) {
   var DURATION = 700; // d3 animation duration
   var STAGGERN = 4; // delay for each node
   var STAGGERD = 200; // delay for each depth
@@ -23,7 +44,7 @@ d3.csv('zg.csv', function(error, treeData) {
 
   // current pan, zoom, and rotation
   var curX = width / 2;
-  var curY = height / 2-150;
+  var curY = height / 2-125;
   var curZ = 1.2; // current zoom
   var curR = 270; // current rotation
 
@@ -56,7 +77,9 @@ d3.csv('zg.csv', function(error, treeData) {
     v.parentId = v['关系'].split('.')[0]
     v.name = v['辈名']
   })
-  treeData = toTree(treeData,'泰元')[0]  //泰元 贤友
+  var _xz0 = treeData.find(v => v.name ==_xz).parentId
+  treeData = toTree(treeData,_xz0).find(v => v.name == _xz )
+  // treeData = toTree(treeData,_xz)[0]  //泰元 贤友
   // d3 diagonal projection for use by the node paths
   var diagonal= d3.svg.diagonal.radial()
     .projection(function(d) {
