@@ -140,8 +140,9 @@ d3.csv(_csv, function(error, treeData) {
 
     // Compute the new tree layout.
     var nodes = tree.nodes(root);
+    var nNode = nodes.length                            //hm
+    var ftSize = Math.round(27/Math.log10(nNode)) +'px' //hm
     var links = tree.links(nodes);
-
     // Update the view
     svgGroup.transition().duration(duration)
       .attr('transform',
@@ -204,7 +205,7 @@ d3.csv(_csv, function(error, treeData) {
             ) + reduceZ() +')';
       }).attr('fill', function(d) {
           return d.selected ? SELECTED_COLOR : 'black';
-      }).attr('dy', '.35em');
+      }).attr('dy', '.35em').style("font-size", ftSize); //hm
 
     var nodeUpdate = node.transition().duration(duration)
       .delay( transition ? function(d, i) {
@@ -281,6 +282,8 @@ d3.csv(_csv, function(error, treeData) {
       d.x0 = d.x;
       d.y0 = d.y;
     });
+    // document.querySelectorAll(".node text").forEach(v => v.style.fontSize = "40px")
+  
   } // end update
 
   // Helper functions for collapsing and expanding nodes
