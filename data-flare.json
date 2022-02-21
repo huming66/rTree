@@ -1,65 +1,180 @@
 {
- "name": "flare",
- "children": [
-  {
-   "name": "analytics",
-   "children": [
-    {
-     "name": "cluster",
-     "children": [
-      {"name": "AgglomerativeCluster", "size": 3938},
-      {"name": "CommunityStructure", "size": 3812},
-      {"name": "HierarchicalCluster", "size": 6714},
-      {"name": "MergeEdge", "size": 743}
-     ]
-    },
-    {
-     "name": "graph",
-     "children": [
-      {"name": "BetweennessCentrality", "size": 3534},
-      {"name": "LinkDistance", "size": 5731},
-      {"name": "MaxFlowMinCut", "size": 7840},
-      {"name": "ShortestPaths", "size": 5914},
-      {"name": "SpanningTree", "size": 3416}
-     ]
-    },
-    {
-     "name": "optimization",
-     "children": [
-      {"name": "AspectRatioBanker", "size": 7074}
-     ]
-    }
-   ]
-  },
-  {
-   "name": "animate",
-   "children": [
-    {"name": "Easing", "size": 17010},
-    {"name": "FunctionSequence", "size": 5842},
-    {
-     "name": "interpolate",
-     "children": [
-      {"name": "ArrayInterpolator", "size": 1983},
-      {"name": "ColorInterpolator", "size": 2047},
-      {"name": "DateInterpolator", "size": 1375},
-      {"name": "Interpolator", "size": 8746},
-      {"name": "MatrixInterpolator", "size": 2202},
-      {"name": "NumberInterpolator", "size": 1382},
-      {"name": "ObjectInterpolator", "size": 1629},
-      {"name": "PointInterpolator", "size": 1675},
-      {"name": "RectangleInterpolator", "size": 2042}
-     ]
-    },
-    {"name": "ISchedulable", "size": 1041},
-    {"name": "Parallel", "size": 5176},
-    {"name": "Pause", "size": 449},
-    {"name": "Scheduler", "size": 5593},
-    {"name": "Sequence", "size": 5534},
-    {"name": "Transition", "size": 9201},
-    {"name": "Transitioner", "size": 19975},
-    {"name": "TransitionEvent", "size": 1116},
-    {"name": "Tween", "size": 6006}
-   ]
-  }
- ]
+    "name": "胡忠相",
+    "children": [
+        {
+            "name": "胡孝康",
+            "children": [
+                {
+                    "name": "胡隆德",
+                    "children": [
+                        {
+                            "name": "周继红",
+                            "size": 3938
+                        },
+                        {
+                            "name": "周伟",
+                            "size": 3812
+                        },
+                        {
+                            "name": "周勤",
+                            "size": 6714
+                        }
+                    ]
+                },
+                {
+                    "name": "胡隆积",
+                    "children": [
+                        {
+                            "name": "胡洁(启玄)"
+                        },
+                        {
+                            "name": "胡启梅",
+                            "children": [
+                                {
+                                    "name": "陈宣晟"
+                                },
+                                {
+                                    "name": "陈愉冰",
+                                    "children": []
+                                }
+                            ]
+                        },
+                        {
+                            "name": "胡启维",
+                            "children": [
+                                {
+                                    "name": "吴勋",
+                                    "children": [
+                                        {
+                                            "name": "吴家辉"
+                                        },
+                                        {
+                                            "name": "吴？"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "吴学兰",
+                                    "children": [
+                                        {
+                                            "name": "任？"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "name": "吴振刚",
+                                    "children": [
+                                        {
+                                            "name": "吴家印"
+                                        },
+                                        {
+                                            "name": "吴？"
+                                        }
+                                    ]
+                                }                                
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "胡隆田",
+                    "children": [
+                        {
+                            "name": "AspectRatioBanker"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "animate",
+            "children": [
+                {
+                    "name": "Easing",
+                    "size": 17010
+                },
+                {
+                    "name": "FunctionSequence",
+                    "size": 5842
+                },
+                {
+                    "name": "interpolate",
+                    "children": [
+                        {
+                            "name": "ArrayInterpolator",
+                            "size": 1983
+                        },
+                        {
+                            "name": "ColorInterpolator",
+                            "size": 2047
+                        },
+                        {
+                            "name": "DateInterpolator",
+                            "size": 1375
+                        },
+                        {
+                            "name": "Interpolator",
+                            "size": 8746
+                        },
+                        {
+                            "name": "MatrixInterpolator",
+                            "size": 2202
+                        },
+                        {
+                            "name": "NumberInterpolator",
+                            "size": 1382
+                        },
+                        {
+                            "name": "ObjectInterpolator",
+                            "size": 1629
+                        },
+                        {
+                            "name": "PointInterpolator",
+                            "size": 1675
+                        },
+                        {
+                            "name": "RectangleInterpolator",
+                            "size": 2042
+                        }
+                    ]
+                },
+                {
+                    "name": "ISchedulable",
+                    "size": 1041
+                },
+                {
+                    "name": "Parallel",
+                    "size": 5176
+                },
+                {
+                    "name": "Pause",
+                    "size": 449
+                },
+                {
+                    "name": "Scheduler",
+                    "size": 5593
+                },
+                {
+                    "name": "Sequence",
+                    "size": 5534
+                },
+                {
+                    "name": "Transition",
+                    "size": 9201
+                },
+                {
+                    "name": "Transitioner",
+                    "size": 19975
+                },
+                {
+                    "name": "TransitionEvent",
+                    "size": 1116
+                },
+                {
+                    "name": "Tween",
+                    "size": 6006
+                }
+            ]
+        }
+    ]
 }

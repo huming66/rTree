@@ -128,3 +128,11 @@
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+#text {
+  position: absolute;
+  top:120%;
+  float:left;
+  width: 100%;
+  max-width: 500px;
+  background-color: lightgreen
+}

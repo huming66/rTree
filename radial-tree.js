@@ -1,6 +1,6 @@
 // Get JSON data
-d3.json('data-flare.json', function(error, treeData) {
-
+// d3.json('data-flare.json', function(error, treeData) {
+d3.csv('zg.csv', function(error, treeData) {
   var DURATION = 700; // d3 animation duration
   var STAGGERN = 4; // delay for each node
   var STAGGERD = 200; // delay for each depth
@@ -42,6 +42,21 @@ d3.json('data-flare.json', function(error, treeData) {
   var KEY_HOME = 36;      // (center root)
   var KEY_END = 35;       // (center selection)
 
+
+  const toTree =
+    (arr, pID) =>
+      arr
+        .filter(({ parentId }) => parentId == pID)
+        .map(a => ({
+          ...a,
+          children: toTree(arr.filter(({ parentId }) => parentId != pID), a.name)
+        }))
+
+  treeData.forEach(v => {
+    v.parentId = v['关系'].split('.')[0]
+    v.name = v['辈名']
+  })
+  treeData = toTree(treeData,'泰元')[0]  //泰元 贤友
   // d3 diagonal projection for use by the node paths
   var diagonal= d3.svg.diagonal.radial()
     .projection(function(d) {
@@ -330,6 +345,7 @@ d3.json('data-flare.json', function(error, treeData) {
     curNode.selected = true;
     curPath = []; // filled in by fullpath
     d3.select('#selection').html(fullpath(node));
+    d3.select('#text').html("<b>传衍经历:</b><hr>" + node.传衍经历.split('|').join('<br><br>'));
   }
 
   // for displaying full path of node in tree
