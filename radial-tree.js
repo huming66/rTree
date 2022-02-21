@@ -23,7 +23,7 @@ d3.csv('zg.csv', function(error, treeData) {
 
   // current pan, zoom, and rotation
   var curX = width / 2;
-  var curY = height / 2-100;
+  var curY = height / 2-150;
   var curZ = 1.2; // current zoom
   var curR = 270; // current rotation
 
