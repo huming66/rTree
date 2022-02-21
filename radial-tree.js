@@ -23,8 +23,8 @@ d3.csv('zg.csv', function(error, treeData) {
 
   // current pan, zoom, and rotation
   var curX = width / 2;
-  var curY = height / 2;
-  var curZ = 1.0; // current zoom
+  var curY = height / 2-100;
+  var curZ = 1.2; // current zoom
   var curR = 270; // current rotation
 
   // keyboard key codes
@@ -345,7 +345,8 @@ d3.csv('zg.csv', function(error, treeData) {
     curNode.selected = true;
     curPath = []; // filled in by fullpath
     d3.select('#selection').html(fullpath(node));
-    d3.select('#text').html("<b>传衍经历:</b> 满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + "<hr>" + node.传衍经历.split('|').join('<br><br>'));
+    d3.select('#text').html("<b>满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + 
+    "</b>, 传衍经历及注释<hr>" + node.传衍经历.split('|').join('<br><br>'));
   }
 
   // for displaying full path of node in tree
