@@ -44,7 +44,7 @@ d3.csv(_csv, function(error, treeData) {
 
   // current pan, zoom, and rotation
   var curX = width / 2;
-  var curY = height / 2-125;
+  var curY = height / 2  - 125;
   var curZ = 1.2; // current zoom
   var curR = 270; // current rotation
 

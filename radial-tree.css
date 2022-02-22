@@ -138,3 +138,19 @@
   max-width: 500px;
   background-color: lightgreen
 }
+#hmLable1 {
+  position: absolute;
+  bottom:2%;
+  float:left;
+  width: 100%;
+  max-width: 500px;
+  background-color: lightskyblue
+}
+#hmLable2 {
+  position: absolute;
+  bottom:0%;
+  float:left;
+  width: 100%;
+  max-width: 500px;
+  background-color: lightskyblue
+}
