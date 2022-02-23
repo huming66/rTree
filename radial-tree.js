@@ -143,7 +143,7 @@ d3.csv(_csv, function(error, treeData) {
     // var nNode = nodes.length                            //hm
     // var ftSize = Math.min(27,Math.round(27/Math.log10(nNode))) +'px' //hm
     var nDepth = Math.max(...nodes.map(v => v.depth) )                           //hm
-    var ftSize = Math.max(8,Math.min(27,Math.round(150/nDepth))) +'px' //hm
+    var ftSize = Math.max(8,Math.min(25,Math.round(150/nDepth))) +'px' //hm
     var links = tree.links(nodes);
     // Update the view
     svgGroup.transition().duration(duration)
