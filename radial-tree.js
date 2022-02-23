@@ -16,7 +16,7 @@ var _xz = getUrlVars('xz')['xz']
 if (_xz) {
   _xz = decodeURIComponent(_xz)
 } else {
-  _xz = '宗贵'
+  _xz = '心文'
 }
 
 // Get JSON data
