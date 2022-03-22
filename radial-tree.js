@@ -18,7 +18,13 @@ if (_xz) {
 } else {
   _xz = '心文'
 }
-
+var _lv = getUrlVars('lv')['lv']
+if (_lv) {
+  _lv = decodeURIComponent(_lv)
+} else {
+  _lv = 12
+}
+var _x = 4; // current rotation
 // Get JSON data
 // d3.json('data-flare.json', function(error, treeData) {
 d3.csv(_csv, function(error, treeData) {
@@ -47,6 +53,7 @@ d3.csv(_csv, function(error, treeData) {
   var curY = height / 2  - 125;
   var curZ = 1.2; // current zoom
   var curR = 270; // current rotation
+
 
   // keyboard key codes
   var KEY_PLUS = 187;     // + (zoom in)
@@ -140,10 +147,11 @@ d3.csv(_csv, function(error, treeData) {
 
     // Compute the new tree layout.
     var nodes = tree.nodes(root);
+    nodes = nodes.filter(v => v.depth <=_lv)
     // var nNode = nodes.length                            //hm
     // var ftSize = Math.min(27,Math.round(27/Math.log10(nNode))) +'px' //hm
     var nDepth = Math.max(...nodes.map(v => v.depth) )                           //hm
-    var ftSize = Math.max(8,Math.min(25,Math.round(150/nDepth))) +'px' //hm
+    var ftSize = Math.max(8,Math.min(25,Math.round(110/nDepth))) +'px' //hm
     var links = tree.links(nodes);
     // Update the view
     svgGroup.transition().duration(duration)
@@ -179,8 +187,8 @@ d3.csv(_csv, function(error, treeData) {
       .style('fill-opacity', 0)
       .attr('transform', function() {
           return ((source.x0 + curR) % 360 <= 180 ?
-              'translate(8)scale(' :
-              'rotate(180)translate(-8)scale('
+              'translate('+_x+')scale(' :
+              'rotate(180)translate(-'+_x+')scale('
             ) + reduceZ() + ')';
       });
 
@@ -202,8 +210,8 @@ d3.csv(_csv, function(error, treeData) {
           return (d.x + curR) % 360 <= 180 ? 'start' : 'end';
       }).attr('transform', function(d) {
           return ((d.x + curR) % 360 <= 180 ?
-              'translate(8)scale(' :
-              'rotate(180)translate(-8)scale('
+              'translate('+_x + ')scale(' :
+              'rotate(180)translate(-' +_x + ')scale('
             ) + reduceZ() +')';
       }).attr('fill', function(d) {
           return d.selected ? SELECTED_COLOR : 'black';
@@ -722,8 +730,8 @@ d3.csv(_csv, function(error, treeData) {
           })
           .attr('transform', function(d) {
               return ((d.x + curR) % 360 <= 180 ?
-                  'translate(8)scale(' :
-                  'rotate(180)translate(-8)scale('
+                  'translate(' +_x + ')scale(' :
+                  'rotate(180)translate(-' +_x + ')scale('
                 ) + reduceZ() +')';
           });
       svgGroup.selectAll('circle').attr('r', NODE_DIAMETER * reduceZ());
