@@ -22,7 +22,7 @@ var _lv = getUrlVars('lv')['lv']
 if (_lv) {
   _lv = decodeURIComponent(_lv)
 } else {
-  _lv = 12
+  _lv = 10
 }
 var _x = 4; // current rotation
 // Get JSON data
@@ -31,7 +31,7 @@ d3.csv(_csv, function(error, treeData) {
   var DURATION = 700; // d3 animation duration
   var STAGGERN = 4; // delay for each node
   var STAGGERD = 200; // delay for each depth
-  var NODE_DIAMETER = 4; // diameter of circular nodes
+  var NODE_DIAMETER = 2.5; // diameter of circular nodes
   var MIN_ZOOM = 0.5; // minimum zoom allowed
   var MAX_ZOOM = 10;  // maximum zoom allowed
   var HAS_CHILDREN_COLOR = 'lightsteelblue';
@@ -50,7 +50,7 @@ d3.csv(_csv, function(error, treeData) {
 
   // current pan, zoom, and rotation
   var curX = width / 2;
-  var curY = height / 2  - 125;
+  var curY = height / 2 ;
   var curZ = 1.2; // current zoom
   var curR = 270; // current rotation
 
@@ -77,8 +77,23 @@ d3.csv(_csv, function(error, treeData) {
         .filter(({ parentId }) => parentId == pID)
         .map(a => ({
           ...a,
-          children: toTree(arr.filter(({ parentId }) => parentId != pID), a.name)
+          children: toTree(
+            arr.filter(({ parentId }) => parentId != pID) // arr
+            , a.name                                      // pID
+          )
         }))
+  
+  function setDepth(tree, lv) {
+      if (lv > 0) {
+        tree.children.forEach(chr => {
+          chr = setDepth(chr, lv-1)
+        })
+      } else {
+        delete tree.children 
+      }
+      return tree
+  }
+ 
 
   treeData.forEach(v => {
     v.parentId = v['关系'].split('.')[0]
@@ -86,9 +101,10 @@ d3.csv(_csv, function(error, treeData) {
   })
   var _xz0 = treeData.find(v => v.name ==_xz).parentId
   treeData = toTree(treeData,_xz0).find(v => v.name == _xz )
+  treeData = setDepth(treeData, +_lv)
   // treeData = toTree(treeData,_xz)[0]  //泰元 贤友
   // d3 diagonal projection for use by the node paths
-  var diagonal= d3.svg.diagonal.radial()
+  var diagonal = d3.svg.diagonal.radial()
     .projection(function(d) {
         return [d.y, d.x / 180 * Math.PI];
     });
@@ -147,7 +163,8 @@ d3.csv(_csv, function(error, treeData) {
 
     // Compute the new tree layout.
     var nodes = tree.nodes(root);
-    nodes = nodes.filter(v => v.depth <=_lv)
+    // nodes = nodes.filter(v => v.depth <=_lv)
+  
     // var nNode = nodes.length                            //hm
     // var ftSize = Math.min(27,Math.round(27/Math.log10(nNode))) +'px' //hm
     var nDepth = Math.max(...nodes.map(v => v.depth) )                           //hm
