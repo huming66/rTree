@@ -99,6 +99,7 @@ d3.csv(_csv, function(error, treeData) {
      } 
   }
   function __highlighChild(nd) {
+    if (nd.辈名 == root.辈名) return
     if (nd.children) {
       nd.children.forEach(_nd => {
         _nd.highLighted = _nd.highLighted? false : 'link2';
@@ -421,8 +422,8 @@ d3.csv(_csv, function(error, treeData) {
     }
     curNode = node;
     curNode.selected = true;
-    __highlighParent(curNode)
-    __highlighChild(curNode)
+      __highlighParent(curNode)
+      __highlighChild(curNode)
     curPath = []; // filled in by fullpath
     d3.select('#selection').html(fullpath(node));
     d3.select('#text').html("<b>满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + 
