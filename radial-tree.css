@@ -136,7 +136,12 @@
   stroke-width: 15px;
   stroke-opacity: 0.5
 }
-
+.link2 {
+  fill: none;
+  stroke: blue;
+  stroke-width: 1.0px;
+  stroke-opacity: 0.5
+}
 #text {
   position: absolute;
   top:120%;
@@ -163,5 +168,5 @@
 }
 #selection {
   background-color: #cfc;
-  color: red
+  color: brown
 }

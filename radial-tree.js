@@ -94,11 +94,19 @@ d3.csv(_csv, function(error, treeData) {
   }
   function __highlighParent(nd) {
      if (nd.parent) {
-       nd.parent.highLighted = nd.parent.highLighted? false : true;
+       nd.parent.highLighted = nd.parent.highLighted? false : 'link1';
        __highlighParent(nd.parent)
      } 
   }
- 
+  function __highlighChild(nd) {
+    if (nd.children) {
+      nd.children.forEach(_nd => {
+        _nd.highLighted = _nd.highLighted? false : 'link2';
+        __highlighChild(_nd)
+  
+      })
+    } 
+ }
 
 
  //===========================
@@ -293,7 +301,10 @@ d3.csv(_csv, function(error, treeData) {
             target: o
         });
     });
-    link.attr('class', function (d) {return d.highLighted ? 'link link1' : 'link'})
+    link.attr('class', function (d) {
+      return d.highLighted ? 'link ' + (d.highLighted==true? 'link1' : d.highLighted) : 'link'
+      // return d.highLighted ? ('link ' + d.highLighted) : 'link'
+    })
     // Transition links to their new position
     link.transition().duration(duration)
       .delay( transition ? function(d, i) {
@@ -406,10 +417,12 @@ d3.csv(_csv, function(error, treeData) {
     if (curNode) {
       delete curNode.selected;
       __highlighParent(curNode)
+      __highlighChild(curNode)
     }
     curNode = node;
     curNode.selected = true;
     __highlighParent(curNode)
+    __highlighChild(curNode)
     curPath = []; // filled in by fullpath
     d3.select('#selection').html(fullpath(node));
     d3.select('#text').html("<b>满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + 
