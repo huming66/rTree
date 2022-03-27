@@ -130,6 +130,13 @@
   stroke: #ccc;
   stroke-width: 1.5px;
 }
+.link1 {
+  fill: none;
+  stroke: #3f3;
+  stroke-width: 15px;
+  stroke-opacity: 0.5
+}
+
 #text {
   position: absolute;
   top:120%;
@@ -153,4 +160,8 @@
   width: 100%;
   max-width: 500px;
   background-color: lightskyblue
+}
+#selection {
+  background-color: #cfc;
+  color: red
 }

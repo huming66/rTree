@@ -70,39 +70,47 @@ d3.csv(_csv, function(error, treeData) {
   var KEY_HOME = 36;      // (center root)
   var KEY_END = 35;       // (center selection)
 
-
-  const toTree =
+//=================== by hm
+  const ___toTree =
     (arr, pID) =>
       arr
         .filter(({ parentId }) => parentId == pID)
         .map(a => ({
           ...a,
-          children: toTree(
+          children: ___toTree(
             arr.filter(({ parentId }) => parentId != pID) // arr
             , a.name                                      // pID
           )
         }))
-  
-  function setDepth(tree, lv) {
-      if (lv > 0) {
-        tree.children.forEach(chr => {
-          chr = setDepth(chr, lv-1)
-        })
-      } else {
-        delete tree.children 
-      }
-      return tree
+  function ___setDepth(tree, lv) {
+    if (lv > 0) {
+      tree.children.forEach(chr => {
+        chr = ___setDepth(chr, lv - 1)
+      })
+    } else {
+      delete tree.children
+    }
+    return tree
+  }
+  function __highlighParent(nd) {
+     if (nd.parent) {
+       nd.parent.highLighted = nd.parent.highLighted? false : true;
+       __highlighParent(nd.parent)
+     } 
   }
  
+
+
+ //===========================
 
   treeData.forEach(v => {
     v.parentId = v['关系'].split('.')[0]
     v.name = v['辈名']
   })
   var _xz0 = treeData.find(v => v.name ==_xz).parentId
-  treeData = toTree(treeData,_xz0).find(v => v.name == _xz )
-  treeData = setDepth(treeData, +_lv)
-  // treeData = toTree(treeData,_xz)[0]  //泰元 贤友
+  treeData = ___toTree(treeData,_xz0).find(v => v.name == _xz )
+  treeData = ___setDepth(treeData, +_lv)
+  // treeData = ___toTree(treeData,_xz)[0]  //泰元 贤友
   // d3 diagonal projection for use by the node paths
   var diagonal = d3.svg.diagonal.radial()
     .projection(function(d) {
@@ -170,6 +178,9 @@ d3.csv(_csv, function(error, treeData) {
     var nDepth = Math.max(...nodes.map(v => v.depth) )                           //hm
     var ftSize = Math.max(8,Math.min(25,Math.round(110/nDepth))) +'px' //hm
     var links = tree.links(nodes);
+    links.forEach(v => {
+      v.highLighted = v.target.highLighted || v.target.selected
+    })
     // Update the view
     svgGroup.transition().duration(duration)
       .attr('transform',
@@ -217,7 +228,7 @@ d3.csv(_csv, function(error, treeData) {
       .style('fill', function(d) {
           return d._children ? HAS_CHILDREN_COLOR : 'white';
       }).attr('stroke', function(d) {
-          return d.selected ? SELECTED_COLOR : 'steelblue';
+          return d.selected ? SELECTED_COLOR : (d.highLighted ? 'blue' : 'steelblue');
       }).attr('stroke-width', function(d) {
           return d.selected ? 3 : 1.5;
       });
@@ -231,7 +242,8 @@ d3.csv(_csv, function(error, treeData) {
               'rotate(180)translate(-' +_x + ')scale('
             ) + reduceZ() +')';
       }).attr('fill', function(d) {
-          return d.selected ? SELECTED_COLOR : 'black';
+        // return d.selected ? SELECTED_COLOR : 'black';
+        return d.selected ? SELECTED_COLOR : (d.highLighted ? 'red' : 'black');
       }).attr('dy', '.35em').style("font-size", ftSize); //hm
 
     var nodeUpdate = node.transition().duration(duration)
@@ -281,7 +293,7 @@ d3.csv(_csv, function(error, treeData) {
             target: o
         });
     });
-
+    link.attr('class', function (d) {return d.highLighted ? 'link link1' : 'link'})
     // Transition links to their new position
     link.transition().duration(duration)
       .delay( transition ? function(d, i) {
@@ -393,9 +405,11 @@ d3.csv(_csv, function(error, treeData) {
   function selectNode(node) {
     if (curNode) {
       delete curNode.selected;
+      __highlighParent(curNode)
     }
     curNode = node;
     curNode.selected = true;
+    __highlighParent(curNode)
     curPath = []; // filled in by fullpath
     d3.select('#selection').html(fullpath(node));
     d3.select('#text').html("<b>满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + 
