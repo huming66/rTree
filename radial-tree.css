@@ -140,7 +140,7 @@
   fill: none;
   stroke: darkgreen;
   stroke-width: 3.0px;
-  stroke-opacity: 0.6
+  stroke-opacity: 0.6;
 }
 #text {
   position: absolute;
