@@ -426,8 +426,11 @@ d3.csv(_csv, function(error, treeData) {
       __highlighChild(curNode)
     curPath = []; // filled in by fullpath
     d3.select('#selection').html(fullpath(node));
-    d3.select('#text').html("<b>满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + 
-    "</b>, 传衍经历及注释<hr>" + node.传衍经历.split('|').join('<br><br>'));
+    var txt = "<b>满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + 
+    "</b>, 传衍经历及注释<hr>" + node.传衍经历.split('|').join('<br>') 
+    if (node.链接) txt = txt + (node.链接==''? "" : "<a href=' " + node.链接  + "' target= '_blank'>其它信息</a>")
+    if (node.图片) txt = txt + (node.图片==''? "" : "<img src='" + node.图片+ "' alt='图片' width='100%'></img>")
+    d3.select('#text').html(txt);
   }
 
   // for displaying full path of node in tree
