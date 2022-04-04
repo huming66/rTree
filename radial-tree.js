@@ -92,10 +92,10 @@ d3.csv(_csv, function(error, treeData) {
     }
     return tree
   }
-  function __highlighParent(nd) {
+  function __highlightParent(nd) {
      if (nd.parent) {
        nd.parent.highLighted = nd.parent.highLighted? false : 'link1';
-       __highlighParent(nd.parent)
+       __highlightParent(nd.parent)
      } 
   }
   function __highlighChild(nd) {
@@ -108,6 +108,16 @@ d3.csv(_csv, function(error, treeData) {
       })
     } 
  }
+ function __clearLink(nd) {
+  nd.highLighted = false
+  if (nd.selected) delete nd.selected;
+  if (nd.children) {
+    nd.children.forEach(_nd => {
+      _nd.highLighted = false;
+      __clearLink(_nd)
+    })
+  } 
+}
 
 
  //===========================
@@ -417,20 +427,23 @@ d3.csv(_csv, function(error, treeData) {
   function selectNode(node) {
     if (curNode) {
       delete curNode.selected;
-      __highlighParent(curNode)
-      __highlighChild(curNode)
+      // __highlightParent(curNode)
+      // __highlighChild(curNode)
+      __clearLink(root) //hm
     }
     curNode = node;
     curNode.selected = true;
-      __highlighParent(curNode)
+      __highlightParent(curNode)
       __highlighChild(curNode)
     curPath = []; // filled in by fullpath
     d3.select('#selection').html(fullpath(node));
     var txt = "<b>满公世次-" + [node.满公世次, node.关系, node.辈名, node.别名].join(' ') + 
-    "</b>, 传衍经历及注释<hr>" + node.传衍经历.split('|').join('<br>') 
+    "</b>, 传衍经历及注释<hr>" 
+    d3.select('#text0').html(txt);
+    txt = node.传衍经历.split('|').join('<br>') 
     if (node.链接) txt = txt + (node.链接==''? "" : "<a href=' " + node.链接  + "' target= '_blank'>其它信息</a>")
     if (node.图片) txt = txt + (node.图片==''? "" : "<img src='" + node.图片+ "' alt='图片' width='100%'></img>")
-    d3.select('#text').html(txt);
+    d3.select('#text1').html(txt);
   }
 
   // for displaying full path of node in tree
@@ -461,7 +474,10 @@ d3.csv(_csv, function(error, treeData) {
       root = node;
       target.classList.add('highlight');
     }
+    delete curNode.selected; //hm
+    __clearLink(root)        //hm    
     update(root, true);
+    root.selected = true     //hm
   }
 
   function resize() { // window resize
@@ -597,7 +613,10 @@ d3.csv(_csv, function(error, treeData) {
         moveZ = -ZOOM_INC * slow;
         break;
       case KEY_SLASH: // toggle root to selection
+        delete curNode.selected; //hm
         root = root === curNode ? treeData : curNode;
+        __clearLink(root)        //hm
+        root.selected = true     //hm
         update(root, true);
         curPath = []; // filled in by fullpath
         d3.select('#selection').html(fullpath(curNode));
